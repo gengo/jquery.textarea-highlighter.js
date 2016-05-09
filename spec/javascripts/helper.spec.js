@@ -335,6 +335,35 @@ describe('Helper', function() {
     });
 
 
+    it('should highlight considering word boundary except numbers in a text', function() {
+      var text = 'Text 2test to test word boundary';
+      var list = [
+        { 'class': 'test', 'match': ['Text', 'test'] }
+      ];
+
+      var _indecies = [
+        { start: 0, end: 4, type: 'test' },
+        { start: 6, end: 10, type: 'test' },
+        { start: 14, end: 18, type: 'test' },
+      ]
+
+      var indecies = generateIndecies(text, list);
+      indecies = helper.cleanupOnWordBoundary(text, indecies, false);
+      expect(indecies).toEqual( _indecies );
+
+      var html = '';
+      html += '<span class="test">Text</span>';
+      html += ' 2';
+      html += '<span class="test">test</span>';
+      html += ' to ';
+      html += '<span class="test">test</span>';
+      html += ' word boundary';
+
+      var tokenized = helper.makeTokenized(text, indecies);
+      expect( helper.createHTML(tokenized) ).toEqual( html );
+    });
+
+
   });
 
 });
