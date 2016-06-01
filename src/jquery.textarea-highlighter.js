@@ -179,8 +179,8 @@ var marexandre;
   TextareaHighlighter.prototype.getHighlightedContent = function(text) {
     var _this = this;
     var list = _this.settings.matches;
-    var indeciesList = [];
-    var item, trieIndecies;
+    var indicesList = [];
+    var item, trieIndices;
     var matches = [];
 
     for (var i = 0, imax = list.length; i < imax; i++) {
@@ -203,15 +203,15 @@ var marexandre;
       }
 
       var t = _this.settings.caseSensitive ? text : text.toLowerCase();
-      trieIndecies = item._trie.getIndecies(t);
-      trieIndecies = helper.removeOverlapingIndecies(trieIndecies);
+      trieIndices = item._trie.getIndices(t);
+      trieIndices = helper.removeOverlapingIndices(trieIndices);
 
-      indeciesList.push({ 'indecies': trieIndecies, 'type': item.matchClass });
+      indicesList.push({ 'indices': trieIndices, 'type': item.matchClass });
     }
 
-    var flattened = helper.flattenIndeciesList(indeciesList);
+    var flattened = helper.flattenIndicesList(indicesList);
     flattened = helper.orderBy(flattened, 'start');
-    flattened = helper.removeOverlapingIndecies(flattened);
+    flattened = helper.removeOverlapingIndices(flattened);
     flattened = helper.cleanupOnWordBoundary(text, flattened, _this.settings.wordBase);
 
     return helper.createHTML( helper.makeTokenized(text, flattened) );

@@ -92,12 +92,12 @@ describe('Trie', function () {
     expect( trie.list ).toEqual(obj);
   });
 
-  it('should return indecies from a trie and text', function() {
+  it('should return indices from a trie and text', function() {
     var text = 'This is a test1 to test {0} content test12';
     var trie = new marexandre.Trie(['test', 'test1', 'test12', '{0}', 'hoge']);
-    var indecies = trie.getIndecies(text);
+    var indices = trie.getIndices(text);
 
-    expect( indecies ).toEqual([
+    expect( indices ).toEqual([
       { start: 10, end: 15 },
       { start: 19, end: 23 },
       { start: 24, end: 27 },
@@ -110,12 +110,12 @@ describe('Trie', function () {
     expect( text.slice(36, 42) ).toBe('test12');
   });
 
-  it('should return indecies from a trie and text', function() {
+  it('should return indices from a trie and text', function() {
     var text = '[[[test]]]{0}[[[hoge]]] a test [[[test]]]';
     var trie = new marexandre.Trie(['[[[test]]]', '{0}', '[[[hoge]]]']);
-    var indecies = trie.getIndecies(text);
+    var indices = trie.getIndices(text);
 
-    expect( indecies ).toEqual([
+    expect( indices ).toEqual([
       { start: 0, end: 10 },
       { start: 10, end: 13 },
       { start: 13, end: 23 },

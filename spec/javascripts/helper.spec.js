@@ -40,9 +40,9 @@ describe('Helper', function() {
     });
   });
 
-  describe('test removeOverlapingIndecies', function() {
-    it('should remove overlayied indecies', function() {
-      var indecies = [
+  describe('test removeOverlapingIndices', function() {
+    it('should remove overlayied indices', function() {
+      var indices = [
         { start: 10, end: 12 },
         { start: 11, end: 12 },
 
@@ -55,7 +55,7 @@ describe('Helper', function() {
         { start: 24, end: 26 }
       ];
 
-      expect( helper.removeOverlapingIndecies(indecies) ).toEqual([
+      expect( helper.removeOverlapingIndices(indices) ).toEqual([
         { start: 10, end: 12 },
         { start: 12, end: 20 },
         { start: 24, end: 27 }
@@ -63,7 +63,7 @@ describe('Helper', function() {
     });
 
     it('should order Array by given key', function() {
-      var indecies = [
+      var indices = [
         { start: 2, end: 5,type: 'tags' },
         { start: 6, end: 10, type: 'brackets' },
         { start: 8, end: 14, type: 'misspelling' },
@@ -71,7 +71,7 @@ describe('Helper', function() {
         { start: 20, end: 25, type: 'misspelling' }
       ];
 
-      expect( helper.removeOverlapingIndecies(indecies) ).toEqual([
+      expect( helper.removeOverlapingIndices(indices) ).toEqual([
         { start: 2, end: 5,type: 'tags' },
         { start: 6, end: 10, type: 'brackets' },
         { start: 20, end: 25, type: 'misspelling' }
@@ -80,9 +80,9 @@ describe('Helper', function() {
 
   });
 
-  describe('test removeOverlapingIndeciesByPriority', function() {
+  describe('test removeOverlapingIndicesByPriority', function() {
 
-    it('should order overlayed indecies based on priority', function() {
+    it('should order overlayed indices based on priority', function() {
       var list = [
         { start: 10, end: 12, priority: 0 },
         { start: 11, end: 12, priority: 1 },
@@ -102,7 +102,7 @@ describe('Helper', function() {
         { start: 50, end: 60, priority: 4 }
       ];
 
-      expect( helper.removeOverlapingIndeciesByPriority(list) ).toEqual([
+      expect( helper.removeOverlapingIndicesByPriority(list) ).toEqual([
         { start: 24, end: 27, priority: 0 },
         { start: 11, end: 12, priority: 1 },
         { start: 33, end: 38, priority: 1 },
@@ -119,7 +119,7 @@ describe('Helper', function() {
         { start: 2, end: 4, priority: 1 },
         { start: 8, end: 10, priority: 2 }
       ];
-      expect( helper.removeOverlapingIndeciesByPriority(list) ).toEqual([
+      expect( helper.removeOverlapingIndicesByPriority(list) ).toEqual([
         { start: 0, end: 1, priority: 0 },
         { start: 2, end: 4, priority: 1 },
         { start: 8, end: 10, priority: 2 },
@@ -134,12 +134,12 @@ describe('Helper', function() {
         { start: 0, end: 1, priority: 1 },
         { start: 0, end: 2, priority: 2 }
       ];
-      expect( helper.removeOverlapingIndeciesByPriority(list) ).toEqual([
+      expect( helper.removeOverlapingIndicesByPriority(list) ).toEqual([
         { start: 0, end: 1, priority: 99 }
       ]);
     });
 
-    it('overlapping, longest indecies should remain (priorities are equal)', function() {
+    it('overlapping, longest indices should remain (priorities are equal)', function() {
       var list = [
         { start: 0, end: 4, priority: 2 },
         { start: 0, end: 5, priority: 2 },
@@ -148,7 +148,7 @@ describe('Helper', function() {
         { start: 0, end: 2, priority: 0 },
         { start: 0, end: 1, priority: 0 }
       ];
-      expect( helper.removeOverlapingIndeciesByPriority(list) ).toEqual([
+      expect( helper.removeOverlapingIndicesByPriority(list) ).toEqual([
         { start: 0, end: 5, priority: 2 }
       ]);
     });
@@ -160,7 +160,7 @@ describe('Helper', function() {
         { start: 2, end: 4, priority: 1 },
         { start: 8, end: 10, priority: 2 }
       ];
-      expect( helper.removeOverlapingIndeciesByPriority(list) ).toEqual([
+      expect( helper.removeOverlapingIndicesByPriority(list) ).toEqual([
         { start: 0, end: 1, priority: 0 },
         { start: 2, end: 4, priority: 1 },
         { start: 8, end: 10, priority: 2 },
@@ -171,40 +171,40 @@ describe('Helper', function() {
     it('case with token that starts where first token ends', function() {});
 
     it('case with empty tokens', function() {
-      var indecies = [];
-      expect( helper.removeOverlapingIndeciesByPriority(indecies) ).toEqual( [] );
-      expect( helper.removeOverlapingIndeciesByPriority('') ).toEqual( [] );
-      expect( helper.removeOverlapingIndeciesByPriority() ).toEqual( [] );
+      var indices = [];
+      expect( helper.removeOverlapingIndicesByPriority(indices) ).toEqual( [] );
+      expect( helper.removeOverlapingIndicesByPriority('') ).toEqual( [] );
+      expect( helper.removeOverlapingIndicesByPriority() ).toEqual( [] );
     });
 
   });
 
-  describe('test flattenIndeciesList', function() {
+  describe('test flattenIndicesList', function() {
     it('should order Array by given key', function() {
       var list = [
         {
           type: 'brackets',
-          indecies: [
+          indices: [
             { start: 6, end: 10 },
             { start: 11, end: 15 }
           ]
         },
         {
           type: 'tags',
-          indecies: [
+          indices: [
             { start: 2, end: 5 }
           ]
         },
         {
           type: 'misspelling',
-          indecies: [
+          indices: [
             { start: 20, end: 25 },
             { start: 8, end: 14 }
           ]
         }
       ];
 
-      expect( helper.flattenIndeciesList(list) ).toEqual([
+      expect( helper.flattenIndicesList(list) ).toEqual([
         { start: 6, end: 10, type: 'brackets' },
         { start: 11, end: 15, type: 'brackets' },
         { start: 2, end: 5,type: 'tags' },
@@ -216,21 +216,21 @@ describe('Helper', function() {
 
   describe('test makeTokenized', function() {
 
-    function generateIndecies(text, list) {
-      var indeciesList = [];
+    function generateIndices(text, list) {
+      var indicesList = [];
 
       for (var i = 0, imax = list.length; i < imax; i++) {
         var item = list[i];
         var trie = new marexandre.Trie(item.match);
-        var trieIndecies = trie.getIndecies(text);
-        trieIndecies = helper.removeOverlapingIndecies(trieIndecies);
+        var trieIndices = trie.getIndices(text);
+        trieIndices = helper.removeOverlapingIndices(trieIndices);
 
-        indeciesList.push({ 'indecies': trieIndecies, 'type': item.class });
+        indicesList.push({ 'indices': trieIndices, 'type': item.class });
       }
 
-      var flattened = helper.flattenIndeciesList(indeciesList);
+      var flattened = helper.flattenIndicesList(indicesList);
       flattened = helper.orderBy(flattened, 'start');
-      flattened = helper.removeOverlapingIndecies(flattened);
+      flattened = helper.removeOverlapingIndices(flattened);
 
       return flattened;
     }
@@ -243,7 +243,7 @@ describe('Helper', function() {
         { 'class': 'misspelling', 'match': ['は', '誰'] }
       ];
 
-      var _indecies = [
+      var _indices = [
         { start: 7, end: 8, type: 'misspelling' }, // は
         { start: 8, end: 9, type: 'misspelling' }, // 誰
         { start: 11, end: 14,type: 'tags' },       // {0}
@@ -251,9 +251,9 @@ describe('Helper', function() {
         { start: 32, end: 41, type: 'brackets' }   // [[[てすと]]]
       ]
 
-      var indecies = generateIndecies(text, list);
-      indecies = helper.cleanupOnWordBoundary(text, indecies, false);
-      expect(indecies).toEqual( _indecies );
+      var indices = generateIndices(text, list);
+      indices = helper.cleanupOnWordBoundary(text, indices, false);
+      expect(indices).toEqual( _indices );
 
       var html = '';
       html += 'ウィキペディア';
@@ -266,7 +266,7 @@ describe('Helper', function() {
       html += '<span class="brackets">[[[てすと]]]</span>';
       html += 'です';
 
-      var tokenized = helper.makeTokenized(text, indecies);
+      var tokenized = helper.makeTokenized(text, indices);
       expect( helper.createHTML(tokenized) ).toEqual( html );
     });
 
@@ -281,8 +281,8 @@ describe('Helper', function() {
         { 'class': 'misspelling',    'match': ['THiss', 'est', 'a'] }
       ];
 
-      var indecies = generateIndecies(text, list);
-      indecies = helper.cleanupOnWordBoundary(text, indecies, true);
+      var indices = generateIndices(text, list);
+      indices = helper.cleanupOnWordBoundary(text, indices, true);
 
       var html = '';
       html += 'Hi ';
@@ -307,7 +307,7 @@ describe('Helper', function() {
       html += ' aa ';
       html += '<span class="misspelling">a</span>';
 
-      var tokenized = helper.makeTokenized(text, indecies);
+      var tokenized = helper.makeTokenized(text, indices);
       expect( helper.createHTML(tokenized) ).toBe(html);
     });
 
@@ -318,19 +318,19 @@ describe('Helper', function() {
         { 'class': 'test', 'match': ['Text'] }
       ];
 
-      var _indecies = [
+      var _indices = [
         { start: 0, end: 4, type: 'test' }, // Text
       ]
 
-      var indecies = generateIndecies(text, list);
-      indecies = helper.cleanupOnWordBoundary(text, indecies, false);
-      expect(indecies).toEqual( _indecies );
+      var indices = generateIndices(text, list);
+      indices = helper.cleanupOnWordBoundary(text, indices, false);
+      expect(indices).toEqual( _indices );
 
       var html = '';
       html += '<span class="test">Text</span>';
       html += ' test to test first word highlighting';
 
-      var tokenized = helper.makeTokenized(text, indecies);
+      var tokenized = helper.makeTokenized(text, indices);
       expect( helper.createHTML(tokenized) ).toEqual( html );
     });
 
@@ -341,15 +341,15 @@ describe('Helper', function() {
         { 'class': 'test', 'match': ['Text', 'test'] }
       ];
 
-      var _indecies = [
+      var _indices = [
         { start: 0, end: 4, type: 'test' },
         { start: 6, end: 10, type: 'test' },
         { start: 14, end: 18, type: 'test' },
       ]
 
-      var indecies = generateIndecies(text, list);
-      indecies = helper.cleanupOnWordBoundary(text, indecies, false);
-      expect(indecies).toEqual( _indecies );
+      var indices = generateIndices(text, list);
+      indices = helper.cleanupOnWordBoundary(text, indices, false);
+      expect(indices).toEqual( _indices );
 
       var html = '';
       html += '<span class="test">Text</span>';
@@ -359,7 +359,7 @@ describe('Helper', function() {
       html += '<span class="test">test</span>';
       html += ' word boundary';
 
-      var tokenized = helper.makeTokenized(text, indecies);
+      var tokenized = helper.makeTokenized(text, indices);
       expect( helper.createHTML(tokenized) ).toEqual( html );
     });
 

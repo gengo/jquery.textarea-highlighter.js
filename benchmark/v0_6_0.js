@@ -5,8 +5,8 @@ var helper = new marexandre.Helper();
 var v0_6_0 = function(text, list, useWordBase) {
   useWordBase = useWordBase || true;
 
-  var indeciesList = [];
-  var item, trie, trieIndecies;
+  var indicesList = [];
+  var item, trie, trieIndices;
 
   for (var i = 0, imax = list.length; i < imax; i++) {
     item = list[i];
@@ -18,15 +18,15 @@ var v0_6_0 = function(text, list, useWordBase) {
       item._trie = trie;
     }
 
-    trieIndecies = trie.getIndecies(text);
-    trieIndecies = helper.removeOverlapingIndecies(trieIndecies);
+    trieIndices = trie.getIndices(text);
+    trieIndices = helper.removeOverlapingIndices(trieIndices);
 
-    indeciesList.push({ 'indecies': trieIndecies, 'type': item.matchClass });
+    indicesList.push({ 'indices': trieIndices, 'type': item.matchClass });
   }
 
-  var flattened = helper.flattenIndeciesList(indeciesList);
+  var flattened = helper.flattenIndicesList(indicesList);
   flattened = helper.orderBy(flattened, 'start');
-  flattened = helper.removeOverlapingIndecies(flattened);
+  flattened = helper.removeOverlapingIndices(flattened);
   flattened = helper.cleanupOnWordBoundary(text, flattened, useWordBase);
 
   var tokenized = helper.makeTokenized(text, flattened);
