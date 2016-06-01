@@ -180,7 +180,11 @@ var marexandre;
     };
 
     Helper.prototype.checkWordBoundary = function(w, ww) {
-      return new RegExp('(\\b|\\d+)' + this.escapeRegExp(w) + '(\\b|\\d+)').test(ww);
+      var ew = this.escapeRegExp(w);
+      if ($.isNumeric(ew)) {
+        return new RegExp('(\\b|\\D+)' + ew + '(\\b|\\D+)').test(ww);
+      }
+      return new RegExp('(\\b|\\d+)' + ew + '(\\b|\\d+)').test(ww);
     };
 
     Helper.prototype.isWrappedByASCII = function(str) {
