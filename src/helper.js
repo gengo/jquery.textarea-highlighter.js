@@ -18,12 +18,12 @@ var marexandre;
     };
 
     /**
-     * removeOverlapingIndecies removes duplicate indecies from an trie indecies array
-     * trie indecies array looks somehting like this: [{start: 1, end: 3}, ...]
-     * @param  {Array} list Array of trie indecies
-     * @return {Array}      Array with out overlaping trie indecies
+     * removeOverlapingIndices removes duplicate indices from an trie indices array
+     * trie indices array looks somehting like this: [{start: 1, end: 3}, ...]
+     * @param  {Array} list Array of trie indices
+     * @return {Array}      Array with out overlaping trie indices
      */
-    Helper.prototype.removeOverlapingIndecies = function(list) {
+    Helper.prototype.removeOverlapingIndices = function(list) {
       var a = [], item, next;
 
       // Check for overlapping items
@@ -48,12 +48,12 @@ var marexandre;
     };
 
     /**
-     * removeOverlapingIndeciesByPriority removes duplicate indecies from an trie indecies array by priority
-     * trie indecies array looks somehting like this: [{start: 1, end: 3}, ...]
-     * @param  {Array} list Array of trie indecies
-     * @return {Array}      Array with out overlaping trie indecies
+     * removeOverlapingIndicesByPriority removes duplicate indices from an trie indices array by priority
+     * trie indices array looks somehting like this: [{start: 1, end: 3}, ...]
+     * @param  {Array} list Array of trie indices
+     * @return {Array}      Array with out overlaping trie indices
      */
-    Helper.prototype.removeOverlapingIndeciesByPriority = function(list) {
+    Helper.prototype.removeOverlapingIndicesByPriority = function(list) {
       list = list || [];
       list = this.orderBy(list, 'priority');
 
@@ -91,9 +91,9 @@ var marexandre;
     };
 
     /**
-     * isOverlap checks if two trie indecies objects overlap
-     * @param  {Object} x Trie indecies object A
-     * @param  {Object} y Trie indecies object B
+     * isOverlap checks if two trie indices objects overlap
+     * @param  {Object} x Trie indices object A
+     * @param  {Object} y Trie indices object B
      * @return {boolean}   If overlapping or not
      */
     Helper.prototype.isOverlap = function(x, y) {
@@ -101,17 +101,17 @@ var marexandre;
     };
 
     /**
-     * flattenIndeciesList
+     * flattenIndicesList
      * @param  {Array} list [description]
      * @return {Array}      [description]
      */
-    Helper.prototype.flattenIndeciesList = function(list) {
+    Helper.prototype.flattenIndicesList = function(list) {
       var a = [], type, obj;
 
       for (var i = 0, imax = list.length; i < imax; i++) {
         type = list[i].type;
-        for (var j = 0, jmax = list[i].indecies.length; j < jmax; j++) {
-          obj = list[i].indecies[j];
+        for (var j = 0, jmax = list[i].indices.length; j < jmax; j++) {
+          obj = list[i].indices[j];
           a.push({ 'start': obj.start, 'end': obj.end, 'type': type });
         }
       }
@@ -153,14 +153,14 @@ var marexandre;
     /**
      * makeTokenized
      * @param  {String} text     Some text string
-     * @param  {Array} indecies  Array of trie indecies
+     * @param  {Array} indices  Array of trie indices
      * @return {Array}           Array with tokenized content
      */
-    Helper.prototype.makeTokenized = function(text, indecies) {
+    Helper.prototype.makeTokenized = function(text, indices) {
       var a = [], o, s = 0, ss = 0;
 
-      for (var i = 0, imax = indecies.length; i < imax; i++) {
-        o = indecies[i];
+      for (var i = 0, imax = indices.length; i < imax; i++) {
+        o = indices[i];
         ss = o.start;
 
         if (ss > s) {
@@ -180,7 +180,11 @@ var marexandre;
     };
 
     Helper.prototype.checkWordBoundary = function(w, ww) {
-      return new RegExp('\\b' + this.escapeRegExp(w) + '\\b').test(ww);
+      var ew = this.escapeRegExp(w);
+      if ($.isNumeric(ew)) {
+        return new RegExp('(\\b|\\D+)' + ew + '(\\b|\\D+)').test(ww);
+      }
+      return new RegExp('(\\b|\\d+)' + ew + '(\\b|\\d+)').test(ww);
     };
 
     Helper.prototype.isWrappedByASCII = function(str) {
