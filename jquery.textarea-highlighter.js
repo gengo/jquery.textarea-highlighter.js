@@ -394,8 +394,10 @@ var marexandre;
             // Check if next character exists in children, and if does dive deeper
             if (copy[j + 1]) {
               var exists2 = tmpTrie.children.hasOwnProperty(copy[j + 1].toString());
-              if (tmpTrie.is_end && !exists2) {
+              if (tmpTrie.is_end) {
                 end = start + j;
+              }
+              if (!exists2) {
                 break;
               }
             } else {
