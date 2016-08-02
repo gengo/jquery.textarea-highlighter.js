@@ -2,6 +2,16 @@ var marexandre;
 (function (marexandre) {
   'use strict';
 
+  /**
+   * hasChildrenWithValue returns if node of trie has a child
+   * @param  {trie} node Object tire node
+   * @param  {String} char value of trie node
+   * @type {boolean} true if node has a child
+   */
+  function hasChildrenWithValue(node, char) {
+    return node.children.hasOwnProperty(char.toString());
+  }
+
   var Trie = (function() {
     function Trie(_list_) {
       this.list = {
@@ -93,7 +103,7 @@ var marexandre;
         for (var j = 0, jmax = remainingText.length; j < jmax; j++) {
           var c = remainingText[j];
 
-          if (self.hasChildrenWithValue(currentNode, c)) {
+          if (hasChildrenWithValue(currentNode, c)) {
             currentNode = currentNode.children[c];
             start = i;
             // Check if next character exists in children, and if does dive deeper
@@ -101,7 +111,7 @@ var marexandre;
             if (nextChar) {
               if (currentNode.is_end) {
                 end = start + j;
-              } else if (!self.hasChildrenWithValue(currentNode, nextChar)) {
+              } else if (!hasChildrenWithValue(currentNode, nextChar)) {
                 break;
               }
             } else {
@@ -130,16 +140,6 @@ var marexandre;
       }
 
       return result;
-    };
-
-    /**
-     * hasChildrenWithValue returns if node of trie has a child
-     * @param  {trie} node Object tire node
-     * @param  {String} char value of trie node
-     * @type {boolean} true if node has a child
-     */
-    Trie.prototype.hasChildrenWithValue = function(node, char) {
-      return node.children.hasOwnProperty(char.toString());
     };
 
     return Trie;
