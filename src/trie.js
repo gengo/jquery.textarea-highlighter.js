@@ -92,18 +92,17 @@ var marexandre;
         // TODO: Need to refactor this loop :(
         for (var j = 0, jmax = remainingText.length; j < jmax; j++) {
           var c = remainingText[j];
-          var exists = currentNode.children.hasOwnProperty(c.toString());
 
-          if (exists) {
+          if (self.hasChildrenWithValue(currentNode, c)) {
             currentNode = currentNode.children[c];
             start = i;
             // Check if next character exists in children, and if does dive deeper
-            if (remainingText[j + 1]) {
-              var exists2 = currentNode.children.hasOwnProperty(remainingText[j + 1].toString());
+            var nextChar = remainingText[j + 1];
+            if (nextChar) {
               if (currentNode.is_end) {
                 end = start + j;
               }
-              if (!exists2) {
+              if (!self.hasChildrenWithValue(currentNode, nextChar)) {
                 break;
               }
             } else {
@@ -132,6 +131,16 @@ var marexandre;
       }
 
       return result;
+    };
+
+    /**
+     * hasChildrenWithValue returns if node of trie has a child
+     * @param  {trie} node Object tire node
+     * @param  {String} char value of trie node
+     * @type {boolean} true if node has a child
+     */
+    Trie.prototype.hasChildrenWithValue = function(node, char) {
+      return node.children.hasOwnProperty(char.toString());
     };
 
     return Trie;
