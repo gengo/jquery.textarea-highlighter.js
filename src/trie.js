@@ -101,8 +101,7 @@ var marexandre;
             if (nextChar) {
               if (currentNode.is_end) {
                 end = start + j;
-              }
-              if (!self.hasChildrenWithValue(currentNode, nextChar)) {
+              } else if (!self.hasChildrenWithValue(currentNode, nextChar)) {
                 break;
               }
             } else {
