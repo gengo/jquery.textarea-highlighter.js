@@ -183,6 +183,28 @@ describe('jquery.textarea-highlighter', function() {
 
       expect( $segment.find('.background-div').html() ).toBe(html);
     });
+
+    it('should highlight when overlapping tokens contain', function() {
+      var $target = $segment.find('#target-fixture');
+
+      $target
+        .val('L\'anneau en or est un anneau fais d\'or')
+        .textareaHighlighter({
+          matches: [
+            { 'matchClass': 'glossary', 'match': ['or', 'anneau', 'anneau en or'] }
+          ]
+        });
+
+      var html = '';
+      html += 'L\'';
+      html += '<span class="glossary">anneau en or</span>';
+      html += ' est un ';
+      html += '<span class="glossary">anneau</span>';
+      html += ' fais d\'';
+      html += '<span class="glossary">or</span>';
+
+      expect(html).toBe($segment.find('.background-div').html());
+    });
   });
 
   describe('test max length', function() {
