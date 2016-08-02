@@ -82,32 +82,32 @@ var marexandre;
     Trie.prototype.getIndices = function(_text_) {
       var self = this;
       var result = [];
-      var copy = '';
-      var tmpTrie = self.list;
+      var remainingText = '';
+      var currentNode = self.list;
       var start = -1, end = -1;
 
       for (var i = 0, imax = _text_.length; i < imax; i++) {
-        copy = _text_.slice(i);
+        remainingText = _text_.slice(i);
 
         // TODO: Need to refactor this loop :(
-        for (var j = 0, jmax = copy.length; j < jmax; j++) {
-          var c = copy[j];
-          var exists = tmpTrie.children.hasOwnProperty(c.toString());
+        for (var j = 0, jmax = remainingText.length; j < jmax; j++) {
+          var c = remainingText[j];
+          var exists = currentNode.children.hasOwnProperty(c.toString());
 
           if (exists) {
-            tmpTrie = tmpTrie.children[c];
+            currentNode = currentNode.children[c];
             start = i;
             // Check if next character exists in children, and if does dive deeper
-            if (copy[j + 1]) {
-              var exists2 = tmpTrie.children.hasOwnProperty(copy[j + 1].toString());
-              if (tmpTrie.is_end) {
+            if (remainingText[j + 1]) {
+              var exists2 = currentNode.children.hasOwnProperty(remainingText[j + 1].toString());
+              if (currentNode.is_end) {
                 end = start + j;
               }
               if (!exists2) {
                 break;
               }
             } else {
-              if (tmpTrie.is_end) {
+              if (currentNode.is_end) {
                 end = start + j;
                 break;
               }
@@ -128,7 +128,7 @@ var marexandre;
         // Reset for next round
         start = -1;
         end = -1;
-        tmpTrie = self.list;
+        currentNode = self.list;
       }
 
       return result;
