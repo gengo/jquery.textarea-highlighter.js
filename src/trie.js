@@ -44,13 +44,16 @@ var marexandre;
 
       for (var j = 0, jmax = _word_.length; j < jmax; j++) {
         var c = _word_[j];
+        var is_end = j === jmax - 1; // Check if at the last letter
 
         if (obj.children[c] == null) {
           obj.children[c] = {
             children: {},
             value: c,
-            is_end: j === jmax - 1 // Check if at the last letter
+            is_end: is_end
           };
+        } else if (obj.children[c] && is_end) {
+          obj.children[c].is_end = is_end;
         }
 
         obj = obj.children[c];

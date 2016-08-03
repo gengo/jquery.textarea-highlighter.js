@@ -1,6 +1,6 @@
 /**
  * jquery.textarea-highlighter.js - jQuery plugin for highlighting text in textarea.
- * @version v0.8.0
+ * @version v0.8.1
  * @link https://github.com/marexandre/jquery.textarea-highlighter.js
  * @author alexandre.kirillov@gmail.com
  * @license MIT license. http://opensource.org/licenses/MIT
@@ -297,12 +297,12 @@ var marexandre;
   'use strict';
 
   /**
-   * hasChildrenWithValue returns if node of trie has a child
-   * @param  {trie} node Object tire node
+   * hasChildWithValue returns true if the node of a trie has a child with the requested value
+   * @param  {trie} node Object trie node
    * @param  {String} char value of trie node
    * @type {boolean} true if node has a child
    */
-  function hasChildrenWithValue(node, char) {
+  function hasChildWithValue(node, char) {
     return node.children.hasOwnProperty(char.toString());
   }
 
@@ -338,13 +338,16 @@ var marexandre;
 
       for (var j = 0, jmax = _word_.length; j < jmax; j++) {
         var c = _word_[j];
+        var is_end = j === jmax - 1; // Check if at the last letter
 
         if (obj.children[c] == null) {
           obj.children[c] = {
             children: {},
             value: c,
-            is_end: j === jmax - 1 // Check if at the last letter
+            is_end: is_end
           };
+        } else if (obj.children[c] && is_end) {
+          obj.children[c].is_end = is_end;
         }
 
         obj = obj.children[c];
@@ -397,7 +400,7 @@ var marexandre;
         for (var j = 0, jmax = remainingText.length; j < jmax; j++) {
           var c = remainingText[j];
 
-          if (hasChildrenWithValue(currentNode, c)) {
+          if (hasChildWithValue(currentNode, c)) {
             currentNode = currentNode.children[c];
             start = i;
             // Check if next character exists in children, and if does dive deeper
@@ -405,7 +408,7 @@ var marexandre;
             if (nextChar) {
               if (currentNode.is_end) {
                 end = start + j;
-              } else if (!hasChildrenWithValue(currentNode, nextChar)) {
+              } else if (!hasChildWithValue(currentNode, nextChar)) {
                 break;
               }
             } else {

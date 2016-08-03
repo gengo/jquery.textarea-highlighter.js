@@ -141,6 +141,13 @@ describe('Trie', function () {
     expect( trie.hasWord('{1}') ).toBe(false);
   });
 
+  it('should check if order of words sort by larger and overlapping word', function() {
+    var trie = new marexandre.Trie(['test21', 'test2']);
+
+    expect( trie.hasWord('test21') ).toBe(true);
+    expect( trie.hasWord('test2') ).toBe(true);
+  });
+
   it('should add a word to the trie', function() {
     var trie = new marexandre.Trie();
     trie.add('alex');
