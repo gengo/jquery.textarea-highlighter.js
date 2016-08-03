@@ -2,6 +2,16 @@ var marexandre;
 (function (marexandre) {
   'use strict';
 
+  /**
+   * hasChildWithValue returns true if the node of a trie has a child with the requested value
+   * @param  {trie} node Object trie node
+   * @param  {String} char value of trie node
+   * @type {boolean} true if node has a child
+   */
+  function hasChildWithValue(node, char) {
+    return node.children.hasOwnProperty(char.toString());
+  }
+
   var Trie = (function() {
     function Trie(_list_) {
       this.list = {
@@ -34,13 +44,16 @@ var marexandre;
 
       for (var j = 0, jmax = _word_.length; j < jmax; j++) {
         var c = _word_[j];
+        var is_end = j === jmax - 1; // Check if at the last letter
 
         if (obj.children[c] == null) {
           obj.children[c] = {
             children: {},
             value: c,
-            is_end: j === jmax - 1 // Check if at the last letter
+            is_end: is_end
           };
+        } else if (obj.children[c] && is_end) {
+          obj.children[c].is_end = is_end;
         }
 
         obj = obj.children[c];
@@ -82,30 +95,30 @@ var marexandre;
     Trie.prototype.getIndices = function(_text_) {
       var self = this;
       var result = [];
-      var copy = '';
-      var tmpTrie = self.list;
+      var remainingText = '';
+      var currentNode = self.list;
       var start = -1, end = -1;
 
       for (var i = 0, imax = _text_.length; i < imax; i++) {
-        copy = _text_.slice(i);
+        remainingText = _text_.slice(i);
 
         // TODO: Need to refactor this loop :(
-        for (var j = 0, jmax = copy.length; j < jmax; j++) {
-          var c = copy[j];
-          var exists = tmpTrie.children.hasOwnProperty(c.toString());
+        for (var j = 0, jmax = remainingText.length; j < jmax; j++) {
+          var c = remainingText[j];
 
-          if (exists) {
-            tmpTrie = tmpTrie.children[c];
+          if (hasChildWithValue(currentNode, c)) {
+            currentNode = currentNode.children[c];
             start = i;
             // Check if next character exists in children, and if does dive deeper
-            if (copy[j + 1]) {
-              var exists2 = tmpTrie.children.hasOwnProperty(copy[j + 1].toString());
-              if (tmpTrie.is_end && !exists2) {
+            var nextChar = remainingText[j + 1];
+            if (nextChar) {
+              if (currentNode.is_end) {
                 end = start + j;
+              } else if (!hasChildWithValue(currentNode, nextChar)) {
                 break;
               }
             } else {
-              if (tmpTrie.is_end) {
+              if (currentNode.is_end) {
                 end = start + j;
                 break;
               }
@@ -126,7 +139,7 @@ var marexandre;
         // Reset for next round
         start = -1;
         end = -1;
-        tmpTrie = self.list;
+        currentNode = self.list;
       }
 
       return result;
