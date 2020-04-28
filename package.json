@@ -1,7 +1,7 @@
 {
   "name": "jquery.textarea-highlighter.js",
   "description": "jQuery plugin for highlighting text in textarea.",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "homepage": "https://github.com/marexandre/jquery.textarea-highlighter.js",
   "license": "MIT license. http://opensource.org/licenses/MIT",
   "author": {
@@ -13,7 +13,7 @@
     "url": "https://github.com/marexandre/jquery.textarea-highlighter.js.git"
   },
   "devDependencies": {
-    "bower": "^1.4.1",
+    "bower": "^1.8.8",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-coveralls": "^0.1.4",

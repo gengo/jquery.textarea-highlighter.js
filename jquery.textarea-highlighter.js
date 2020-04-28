@@ -1,6 +1,6 @@
 /**
  * jquery.textarea-highlighter.js - jQuery plugin for highlighting text in textarea.
- * @version v0.8.1
+ * @version v0.8.2
  * @link https://github.com/marexandre/jquery.textarea-highlighter.js
  * @author alexandre.kirillov@gmail.com
  * @license MIT license. http://opensource.org/licenses/MIT
@@ -134,7 +134,7 @@ var marexandre;
      * @return {Array}                 [description]
      */
     Helper.prototype.cleanupOnWordBoundary = function(text, list, useWordBoundary) {
-      useWordBoundary = useWordBoundary || true;
+      useWordBoundary = !!useWordBoundary;
 
       var a = [], o, w, ww, wws;
 
