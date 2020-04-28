@@ -127,7 +127,7 @@ var marexandre;
      * @return {Array}                 [description]
      */
     Helper.prototype.cleanupOnWordBoundary = function(text, list, useWordBoundary) {
-      useWordBoundary = useWordBoundary || true;
+      useWordBoundary = !!useWordBoundary;
 
       var a = [], o, w, ww, wws;
 
